@@ -8,9 +8,20 @@ module.exports = (app) => {
     })
 
     app.get('/livros', function (req, resp) {
-        resp.send(`
-        <div>Pagina de livros</div>
-            <div>Get Livros</div>
-    `)
+        resp.marko( 
+            require('../view/livros/listagem/listagem.marko'),
+            {
+                livros: [
+                    {
+                        id: 1,
+                        titulo: "Fundamentos do Node"
+                    },
+                    {
+                        id: 2,
+                        titulo: "Node Avançado"
+                    }
+                ]
+            }
+            )
     })
 }

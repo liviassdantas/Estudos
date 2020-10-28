@@ -6,22 +6,20 @@ module.exports = (app) => {
             <div>Get Get</div>
     `)
     })
-
-    app.get('/livros', function (req, resp) {
-        resp.marko( 
-            require('../view/livros/listagem/listagem.marko'),
-            {
-                livros: [
-                    {
-                        id: 1,
-                        titulo: "Fundamentos do Node"
-                    },
-                    {
-                        id: 2,
-                        titulo: "Node Avançado"
-                    }
-                ]
-            }
-            )
-    })
+    const db = require('../../config/database')
+    app.get('/livros', function(req, resp) {
+        db.all('SELECT * FROM livros', function(erro, resultados) {
+    
+            resp.marko(
+                require('../view/livros/listagem/listagem.marko'),
+                {
+                    livros: resultados
+                }
+    
+            );
+    
+        });
+    
+    
+    });
 }
